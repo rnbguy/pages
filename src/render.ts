@@ -112,9 +112,8 @@ export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
   const topLinks = (cfg.navBar ?? []).map((key: string) => {
     const slug = key.trim().toLowerCase();
     const label = slug.replace(/[_-]+/g, " ");
-    const path = slug === "whoami" ? "/whoami" : `/${slug}`;
     return `<a class="top-link" href="${
-      escapeAttr(applyBasePath(basePath, path))
+      escapeAttr(applyBasePath(basePath, `/${slug}`))
     }">${escapeHtml(label)}</a>`;
   }).join("");
 
