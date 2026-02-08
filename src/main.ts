@@ -9,7 +9,7 @@ import { serve } from "./serve.ts";
 
 await new Command()
   .name("pages")
-  .version("0.1.0")
+  .version("0.1.1")
   .description("minimal static site generator")
   .action(function () {
     this.showHelp();
