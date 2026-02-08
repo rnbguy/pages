@@ -1,40 +1,31 @@
 import type { Config, ImageConfig } from "./core/types.ts";
 
+function toAbsoluteUrl(baseUrl: string, path: string): string {
+  if (path.startsWith("http")) return path;
+  return `${baseUrl}${path.startsWith("/") ? "" : "/"}${path}`;
+}
+
 export function resolveImageUrl(cfg: Config, image: ImageConfig): string {
   const githubImg = cfg.github
     ? `https://github.com/${encodeURIComponent(cfg.github)}.png?size=256`
     : "";
-  const twitterProfile = cfg.twitter.profile?.trim() ?? "";
-  const twitterImg = twitterProfile
-    ? `https://unavatar.io/twitter/${
-      encodeURIComponent(twitterProfile.replace(/^@/, ""))
-    }`
-    : "";
   if (!image) return githubImg;
   if (image === "github") return githubImg;
-  if (image === "twitter") return twitterImg;
-  if (typeof image === "object" && "file" in image) {
-    const path = image.file.trim();
-    if (!path) return githubImg;
-    return path.startsWith("http")
-      ? path
-      : `${cfg.url}${path.startsWith("/") ? "" : "/"}${path}`;
+  if (image === "twitter") {
+    const profile = cfg.twitter.profile?.trim() ?? "";
+    return profile
+      ? `https://unavatar.io/twitter/${
+        encodeURIComponent(profile.replace(/^@/, ""))
+      }`
+      : "";
   }
-  if (typeof image === "string") {
-    const path = image.trim();
-    if (!path) return githubImg;
-    return path.startsWith("http")
-      ? path
-      : `${cfg.url}${path.startsWith("/") ? "" : "/"}${path}`;
-  }
-  return githubImg;
+  const path = (typeof image === "object" && "file" in image)
+    ? image.file.trim()
+    : (typeof image === "string" ? image.trim() : "");
+  return path ? toAbsoluteUrl(cfg.url, path) : githubImg;
 }
 
 export function resolvePageImage(cfg: Config, pageImage?: string): string {
-  if (pageImage) {
-    return pageImage.startsWith("http")
-      ? pageImage
-      : `${cfg.url}${pageImage.startsWith("/") ? "" : "/"}${pageImage}`;
-  }
+  if (pageImage) return toAbsoluteUrl(cfg.url, pageImage);
   return resolveImageUrl(cfg, cfg.image);
 }

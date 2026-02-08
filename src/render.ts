@@ -186,7 +186,6 @@ ${
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.2.5/400.css" integrity="sha384-RRQ8hjtrDMfJX/JcDXps2ApDVhwLE9xuxoFPeJE/M3V/OgwHhLdCMhYMYtSvLeM3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.2.5/700.css" integrity="sha384-joF5n+o4PFB37c3KT86e9tMpigwZbmIQTBGknI5BCn9OS5aep52V7x3QqTvxlC/h" crossorigin="anonymous">
-<link rel="icon" type="image/svg+xml" href="${escapeAttr(faviconLight)}">
 <link rel="icon" type="image/svg+xml" href="${
     escapeAttr(faviconLight)
   }" media="(prefers-color-scheme: light)">
