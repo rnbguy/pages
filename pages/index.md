@@ -8,15 +8,21 @@ description: "minimal static site generator built on deno and markdown"
 minimal static site generator for a personal site. built on deno, markdown, and
 a tiny amount of custom glue.
 
-fork it at: https://github.com/rnbguy/pages
+source: https://github.com/rnbguy/pages
 
 ## quick start
 
-1. **clone this repo**
+no need to clone the tool repo.
+
+1. **create your site**
+
    ```bash
-   git clone https://github.com/rnbguy/pages my-site
+   deno run -A jsr:@rnbguy/pages init my-site
    cd my-site
    ```
+
+   this creates `my-site/` with git, a starter `src/index.md`, and
+   `config.yaml`.
 
 2. **update config**
 
@@ -33,47 +39,51 @@ fork it at: https://github.com/rnbguy/pages
    > if this repo is your `username.github.io` repository, use
    > `username.github.io` as your url
 
-3. **add your content**
+3. **build and preview**
 
-   write markdown files in the `pages/` directory:
    ```bash
-   # create a new page
-   cat > pages/hello.md << 'EOF'
-   ---
-   title: hello world
-   description: my first page
-   ---
-
-   this is my first page!
-   EOF
+   deno run -A jsr:@rnbguy/pages build
+   deno run -A jsr:@rnbguy/pages serve
    ```
 
-4. **commit and push**
-   ```bash
-   git add .
-   git commit -m "initial site setup"
-   git push origin main
-   ```
+   open http://localhost:8000
 
-5. **enable github pages**
+4. **deploy to github pages**
 
-   - go to your repo on github: settings > pages.
-     - https://github.com/yourusername/your-repo/settings/pages
-   - set source to "github actions".
+   commit and push your site directory. then go to your repo on github: settings
+   > pages, and set source to "github actions".
 
-   that's it - the included workflow will deploy automatically
+   see [deployment](/deploy) for a full github actions workflow.
 
    > [!NOTE]
    >
    > if you intend to (or already) use a custom domain for github pages, use
    > `thatwebsite.com/repo-name` or just `thatwebsite.com` accordingly
 
+## commands
+
+```bash
+deno run -A jsr:@rnbguy/pages init <name>     # create a new site project
+deno run -A jsr:@rnbguy/pages build            # generate the site
+deno run -A jsr:@rnbguy/pages serve            # local preview server
+deno run -A jsr:@rnbguy/pages new              # scaffold a new page
+deno run -A jsr:@rnbguy/pages build --help     # see all options
+```
+
 ## structure
 
-    pages/        # markdown + static assets
-    src/          # ssg code
-    dist/         # build output
+after running `init`, your site directory looks like:
+
+    src/          # markdown + static assets (default, configurable)
+    dist/         # build output (after build)
     config.yaml   # site settings
+    .gitignore    # ignores dist/
+
+> [!NOTE]
+>
+> this tool's own repo uses `src: pages` in its `config.yaml` because `src/`
+> contains the deno source code. the default source directory for users is
+> `src/`.
 
 ## learn more
 

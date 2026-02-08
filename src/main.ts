@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-net
 
 import { Command } from "@cliffy/command";
-import { writeDefaultConfig } from "./config_init.ts";
+import { initProject, writeDefaultConfig } from "./config_init.ts";
 import { loadConfig, stripUndefined } from "./core/config.ts";
 import type { Config } from "./core/types.ts";
 import { scaffold } from "./scaffold.ts";
@@ -39,7 +39,12 @@ await new Command()
     const cfg = loadConfig();
     await scaffold(cfg);
   })
-  .command("init", "write default config.yaml and schema")
+  .command("init", "create a new site project")
+  .arguments("<name:string>")
+  .action(async (_opts: void, name: string) => {
+    await initProject(name);
+  })
+  .command("config", "write default config.yaml and schema")
   .option("-f, --force", "overwrite existing config")
   .action(async (opts: { force?: boolean }) => {
     await writeDefaultConfig("config.yaml", "config.schema.json", !!opts.force);

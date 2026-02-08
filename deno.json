@@ -1,12 +1,13 @@
 {
-  "name": "pages",
+  "name": "@rnbguy/pages",
   "version": "0.1.0",
+  "license": "MIT",
   "exports": "./src/main.ts",
   "tasks": {
     "build": "deno run --allow-read=pages,config.yaml,src/assets,$HOME/.cache/deno --allow-write=dist --allow-net=cdn.jsdelivr.net --allow-env=VSCODE_TEXTMATE_DEBUG src/main.ts build",
     "serve": "deno run --allow-read=dist,config.yaml --allow-net=localhost:8000,0.0.0.0:8000 src/main.ts serve",
     "new": "deno run --allow-read=config.yaml,pages --allow-write=pages src/main.ts new",
-    "init": "deno run --allow-read=config.yaml --allow-write=config.yaml,config.schema.json src/main.ts init",
+    "init": "deno run --allow-read --allow-write --allow-run=git src/main.ts init",
     "schema": "deno run --allow-write=config.schema.json src/main.ts schema",
     "fmt": "deno fmt",
     "lint": "deno lint",

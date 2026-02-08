@@ -4,7 +4,7 @@ import { type Config, ConfigSchema } from "./types.ts";
 
 export const DEFAULTS: Config = {
   // paths
-  src: "pages",
+  src: "src",
   dest: "dist",
   port: 8000,
   url: "",
