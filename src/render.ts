@@ -63,15 +63,12 @@ export function renderSiteJs(themesJson: string, defaultTheme: string): string {
 
 export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
   const basePath = basePathFromUrl(cfg.url);
-  const baseParts = basePath.split("/").filter(Boolean);
-  const builtBase = baseParts.length > 1
-    ? `/${baseParts.slice(0, -1).join("/")}`
-    : basePath;
+
   const assetBase = applyBasePath(basePath, "/assets");
   const faviconLight = `${assetBase}/favicon-light.svg`;
   const faviconDark = `${assetBase}/favicon-dark.svg`;
   const rootHref = applyBasePath(basePath, "/");
-  const builtHref = applyBasePath(builtBase, "/pages");
+  const pagesToolUrl = "https://ranadeep.in/pages";
 
   const canonical = `${cfg.url}${page.url}`;
   const is404 = page.slug === "404";
@@ -233,9 +230,7 @@ ${
     page.slug !== "404"
       ? `<footer>\n<div class="footer-left"><a class="md-link" href="${
         escapeAttr(rawMdUrl)
-      }">raw <span class="md-ext">.md</span></a></div>\n<div class="footer-center"><a class="built-link" href="${
-        escapeAttr(builtHref)
-      }">built by <span class="md-ext">/pages</span></a></div>\n<div class="footer-right">${twitterIcon}${githubIcon}</div>\n</footer>`
+      }">raw <span class="md-ext">.md</span></a></div>\n<div class="footer-center"><a class="built-link" href="${pagesToolUrl}">built by <span class="md-ext">/pages</span></a></div>\n<div class="footer-right">${twitterIcon}${githubIcon}</div>\n</footer>`
       : ""
   }
 <script src="${escapeAttr(assetBase)}/site.js" defer></script>
