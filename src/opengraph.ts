@@ -116,13 +116,20 @@ function generateOgSvg(
   const footerParts = [author, siteName].filter(Boolean);
   const footer = footerParts.join(" / ");
 
+  const ctaY = footerY - 55;
+
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${OG_WIDTH}" height="${OG_HEIGHT}">
   <rect width="${OG_WIDTH}" height="${OG_HEIGHT}" fill="${bg}"/>
+  ${titleTexts}
+  ${bodyTexts}
+  <text x="${
+    OG_WIDTH / 2
+  }" y="${ctaY}" text-anchor="middle" fill="${accent}" font-size="24" font-family="Iosevka" font-weight="400">Read more at ${
+    svgEscape(siteName)
+  }</text>
   <line x1="${marginX}" y1="${footerY - 50}" x2="${OG_WIDTH - marginX}" y2="${
     footerY - 50
   }" stroke="${accent}" stroke-width="2"/>
-  ${titleTexts}
-  ${bodyTexts}
   <text x="${
     OG_WIDTH / 2
   }" y="${footerY}" text-anchor="middle" fill="${muted}" font-size="32" font-family="Iosevka">${

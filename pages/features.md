@@ -24,8 +24,9 @@ pages is a minimal static site generator. here's what it does:
 
 ## theming
 
-- **light/dark themes** with system preference detection
-- theme picker in header
+- **16+ light/dark color themes** for the site and code blocks with system
+  preference detection
+- color theme picker in header
 - persistent preference via localstorage
 
 ## developer experience
