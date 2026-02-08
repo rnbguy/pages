@@ -1,0 +1,39 @@
+{
+  "name": "pages",
+  "version": "0.1.0",
+  "exports": "./src/main.ts",
+  "tasks": {
+    "build": "deno run --allow-read=pages,config.yaml,src/assets,$HOME/.cache/deno --allow-write=dist --allow-net=cdn.jsdelivr.net --allow-env=VSCODE_TEXTMATE_DEBUG src/main.ts build",
+    "serve": "deno run --allow-read=dist,config.yaml --allow-net=localhost:8000,0.0.0.0:8000 src/main.ts serve",
+    "new": "deno run --allow-read=config.yaml,pages --allow-write=pages src/main.ts new",
+    "init": "deno run --allow-read=config.yaml --allow-write=config.yaml,config.schema.json src/main.ts init",
+    "schema": "deno run --allow-write=config.schema.json src/main.ts schema",
+    "fmt": "deno fmt",
+    "lint": "deno lint",
+    "check": "deno check src/main.ts"
+  },
+  "imports": {
+    "@cliffy/command": "jsr:@cliffy/command@1.0.0-rc.8",
+    "@cliffy/prompt": "jsr:@cliffy/prompt@1.0.0-rc.8",
+    "@std/async/pool": "jsr:@std/async@1/pool",
+    "@std/front-matter": "jsr:@std/front-matter@1",
+    "@std/front-matter/yaml": "jsr:@std/front-matter@1/yaml",
+    "@std/fs/copy": "jsr:@std/fs@1/copy",
+    "@std/fs/ensure-dir": "jsr:@std/fs@1/ensure-dir",
+    "@std/fs/walk": "jsr:@std/fs@1/walk",
+    "@std/html": "jsr:@std/html@1",
+    "@std/path": "jsr:@std/path@1",
+    "@std/assert": "jsr:@std/assert@1",
+    "@std/yaml": "jsr:@std/yaml@1",
+    "@shikijs/transformers": "npm:@shikijs/transformers@^3",
+    "beautiful-mermaid": "npm:beautiful-mermaid@^0.1",
+    "@sinclair/typebox": "npm:@sinclair/typebox@^0.32.0",
+    "@sinclair/typebox/value": "npm:@sinclair/typebox@^0.32.0/value",
+    "lucide-static": "npm:lucide-static@^0.438.0",
+    "marked": "npm:marked@^17",
+    "marked-alert": "npm:marked-alert@^2",
+    "resvg-wasm": "npm:@resvg/resvg-wasm@2.6.2",
+    "shiki": "npm:shiki@^3",
+    "simple-icons": "npm:simple-icons@^11"
+  }
+}
