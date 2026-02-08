@@ -1,10 +1,18 @@
 import { initWasm, Resvg } from "resvg-wasm";
 import { FONT_CDN, OG_HEIGHT, OG_WIDTH } from "./core/constants.ts";
 
+async function readUrl(url: URL): Promise<Uint8Array> {
+  if (url.protocol === "file:") {
+    return await Deno.readFile(url);
+  }
+  const res = await fetch(url);
+  return new Uint8Array(await res.arrayBuffer());
+}
+
 export async function initResvg(): Promise<void> {
   const pkgPath = import.meta.resolve("resvg-wasm");
   const wasmPath = new URL("./index_bg.wasm", pkgPath);
-  await initWasm(await Deno.readFile(wasmPath));
+  await initWasm(await readUrl(wasmPath));
 }
 
 export async function fetchFonts(): Promise<Uint8Array[]> {
