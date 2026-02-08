@@ -5,13 +5,25 @@ import { initProject, writeDefaultConfig } from "./config_init.ts";
 import { loadConfig, stripUndefined } from "./core/config.ts";
 import type { Config } from "./core/types.ts";
 import { scaffold } from "./scaffold.ts";
-import { writeConfigSchema } from "./schema.ts";
 import { serve } from "./serve.ts";
 
 await new Command()
   .name("pages")
   .version("0.1.0")
   .description("minimal static site generator")
+  .action(function () {
+    this.showHelp();
+  })
+  .command("init", "create a new site project")
+  .arguments("<name:string>")
+  .action(async (_opts: void, name: string) => {
+    await initProject(name);
+  })
+  .command("new", "scaffold a new page interactively")
+  .action(async () => {
+    const cfg = loadConfig();
+    await scaffold(cfg);
+  })
   .command("build", "build the site")
   .option("--src <path:string>", "source directory")
   .option("--dest <path:string>", "output directory")
@@ -34,23 +46,15 @@ await new Command()
       await serve(cfg, opts.port);
     },
   )
-  .command("new", "scaffold a new page interactively")
-  .action(async () => {
-    const cfg = loadConfig();
-    await scaffold(cfg);
-  })
-  .command("init", "create a new site project")
-  .arguments("<name:string>")
-  .action(async (_opts: void, name: string) => {
-    await initProject(name);
-  })
   .command("config", "write default config.yaml and schema")
   .option("-f, --force", "overwrite existing config")
   .action(async (opts: { force?: boolean }) => {
     await writeDefaultConfig("config.yaml", "config.schema.json", !!opts.force);
   })
   .command("schema", "regenerate config.schema.json")
+  .hidden()
   .action(async () => {
+    const { writeConfigSchema } = await import("./schema.ts");
     await writeConfigSchema("config.schema.json");
   })
   .parse(Deno.args);
