@@ -50,8 +50,8 @@ no need to clone the tool repo.
 
 4. **deploy to github pages**
 
-   commit and push your site directory. then go to your repo on github: settings
-   > pages, and set source to "github actions".
+   commit and push your site directory. then go to your repo on github. click on
+   "settings" tab and then "pages", and then set "source" to "github actions".
 
    see [deployment](/deploy) for a full github actions workflow.
 
