@@ -11,7 +11,7 @@ all site settings live in `config.yaml` at the project root.
 
 | key    | type   | description                                                 |
 | ------ | ------ | ----------------------------------------------------------- |
-| `src`  | string | source directory for markdown files (default: `pages`)      |
+| `src`  | string | source directory for markdown files (default: `src`)        |
 | `dest` | string | output directory for built site (default: `dist`)           |
 | `port` | number | dev server port (default: `8000`)                           |
 | `url`  | string | base url for the site (used for canonical links, og images) |
@@ -81,7 +81,7 @@ array of page slugs to show in the header navigation.
 
 ```yaml
 #! file: config.yaml
-src: pages
+src: src
 dest: dist
 port: 8000
 url: "https://example.com"

@@ -11,7 +11,7 @@ under a subpath.
 ## quick start
 
 ```bash
-deno task build
+deno run -A jsr:@rnbguy/pages build
 ```
 
 this generates the static site in `dist/`.
@@ -54,12 +54,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
-      - run: deno task build
-      - uses: actions/upload-pages-artifact@v3
+      - run: deno run -A jsr:@rnbguy/pages build
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
 
@@ -83,7 +83,7 @@ jobs:
 ## local preview
 
 ```bash
-deno task serve
+deno run -A jsr:@rnbguy/pages serve
 ```
 
 opens a local server at `http://localhost:8000` with the built site.
@@ -93,7 +93,7 @@ opens a local server at `http://localhost:8000` with the built site.
 if using a custom domain like `example.com/pages`:
 
 1. set up dns for your domain
-2. add a `CNAME` file in `pages/` with your domain
+2. add a `CNAME` file in `src/` with your domain
 3. update `url` in `config.yaml`
 
 ---
