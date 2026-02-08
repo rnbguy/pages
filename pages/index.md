@@ -17,14 +17,16 @@ deno task serve   # preview locally
 
 ## example page
 
+<!-- deno-fmt-ignore -->
 ```markdown
-## #! file: pages/hello.md
-
-## title: "hello world" description: "my first page"
+---
+title: "hello world"
+description: "my first page"
+---
 
 # hello world
 
-this is a markdown page with **bold**, _italic_, and `code`.
+this is a markdown page with **bold**, *italic*, and `code`.
 ```
 
 ## structure

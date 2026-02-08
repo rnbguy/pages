@@ -128,7 +128,7 @@
   --code-bg: #f6f8fa;
 }
 [data-theme="github-light"] .shiki span {
-  color: var(--shiki-github-light) !important;
+  /* github-light is the default color in shiki output, no override needed */
 }
 [data-theme="github-dark"] {
   --bg: #24292e;

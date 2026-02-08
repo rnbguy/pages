@@ -21,6 +21,8 @@ export async function initHighlighter(): Promise<Highlighter> {
       "javascript",
       "bash",
       "sh",
+      "shell",
+      "console",
       "json",
       "yaml",
       "toml",
@@ -136,7 +138,10 @@ export function createMarkedForPage(
       },
       html({ text }: { text: string }) {
         const SAFE_TAG = /^<\/?\s*(br|hr|wbr)\s*\/?\s*>$/i;
-        return SAFE_TAG.test(text.trim()) ? text : escapeHtml(text);
+        const COMMENT = /^<!--[\s\S]*?-->$/;
+        const trimmed = text.trim();
+        if (SAFE_TAG.test(trimmed) || COMMENT.test(trimmed)) return text;
+        return escapeHtml(text);
       },
       link(
         { href, title, text }: {
