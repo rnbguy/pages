@@ -63,7 +63,7 @@ export async function build(cfg: Config) {
 
   const hl = await initHighlighter();
   const styleToClass = createStyleTransformer();
-  const siteCss = renderSiteCss();
+  const siteCss = await renderSiteCss();
   const { pages, assets } = await collectContent(
     cfg,
     basePath,
@@ -74,7 +74,9 @@ export async function build(cfg: Config) {
 
   const assetDir = await writeSiteAssets(cfg.dest, styleToClass, siteCss);
   await writeFavicons(cfg, siteCss, assetDir);
-  const ogMap = await generateOgImages(resolvedPages, cfg, assetDir);
+  const themePair = THEMES[DEFAULT_THEME] ?? Object.values(THEMES)[0];
+  const ogColors = resolveThemeColors(siteCss, themePair.light.id);
+  const ogMap = await generateOgImages(resolvedPages, cfg, assetDir, ogColors);
   await Promise.all([
     writeRenderedPages(resolvedPages, cfg, ogMap),
     writeRawMarkdown(resolvedPages, cfg, basePath),
@@ -185,6 +187,7 @@ async function writeSiteAssets(
 type ThemeColors = {
   bg: string;
   fg: string;
+  muted: string;
   accent: string;
 };
 
@@ -217,8 +220,9 @@ function resolveThemeColors(css: string, themeId: string): ThemeColors {
   const block = matchThemeBlock(css, themeId);
   const bg = extractVar(block, "--bg") ?? "#ffffff";
   const fg = extractVar(block, "--fg") ?? "#111111";
+  const muted = extractVar(block, "--muted") ?? "#6a737d";
   const accent = extractVar(block, "--accent") ?? fg;
-  return { bg, fg, accent };
+  return { bg, fg, muted, accent };
 }
 
 function matchThemeBlock(css: string, themeId: string): string {
@@ -258,6 +262,7 @@ async function generateOgImages(
   pages: Page[],
   cfg: Config,
   assetDir: string,
+  colors: ThemeColors,
 ): Promise<Map<string, string>> {
   await initResvg();
   const fontBuffers = await fetchFonts();
@@ -273,6 +278,7 @@ async function generateOgImages(
         page.meta.author ?? cfg.author,
         page.slug,
         fontBuffers,
+        colors,
       );
       await Deno.writeFile(join(assetDir, ogFile), png);
       ogMap.set(page.slug, ogFile);
