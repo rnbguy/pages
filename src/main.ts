@@ -1,6 +1,7 @@
 #!/usr/bin/env -S deno run --allow-read --allow-write --allow-net
 
 import { Command } from "@cliffy/command";
+import denoConfig from "../deno.json" with { type: "json" };
 import { initProject, writeDefaultConfig } from "./config_init.ts";
 import { loadConfig, stripUndefined } from "./core/config.ts";
 import type { Config } from "./core/types.ts";
@@ -9,7 +10,7 @@ import { serve } from "./serve.ts";
 
 await new Command()
   .name("pages")
-  .version("0.1.1")
+  .version(denoConfig.version)
   .description("minimal static site generator")
   .action(function () {
     this.showHelp();
