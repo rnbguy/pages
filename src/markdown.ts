@@ -1,6 +1,6 @@
-import { Marked, type Token } from "marked";
+import { Marked, type Token, type Tokens } from "marked";
 import markedAlert from "marked-alert";
-import { gfmHeadingId } from "marked-gfm-heading-id";
+import GithubSlugger from "github-slugger";
 import { createHighlighter, type Highlighter } from "shiki";
 import { transformerStyleToClass } from "@shikijs/transformers";
 import { renderMermaidAscii } from "beautiful-mermaid";
@@ -91,9 +91,17 @@ export function createMarkedForPage(
 ): Marked {
   const srcDir = dirname(srcRelPath).replace(/\\/g, "/");
   const ids = allThemeIds();
+  const slugger = new GithubSlugger();
 
   const marked = new Marked({
     renderer: {
+      heading({ tokens, depth }: Tokens.Heading): string {
+        const text = this.parser.parseInline(tokens);
+        const id = slugger.slug(text.replace(/<[^>]+>/g, ""));
+        return `<h${depth} id="${escapeAttr(id)}"><a class="anchor" href="#${
+          escapeAttr(id)
+        }">${text}</a></h${depth}>\n`;
+      },
       code({ text, lang }: { text: string; lang?: string }) {
         const info = parseLangInfo(lang);
         const meta = extractCodeMeta(text, info.filename);
@@ -171,7 +179,6 @@ export function createMarkedForPage(
       },
     },
   });
-  marked.use(gfmHeadingId());
   marked.use(markedAlert());
   return marked;
 }
