@@ -50,48 +50,83 @@ function wrapSvgText(text: string, maxChars: number): string[] {
   return lines;
 }
 
+function extractBodyPreview(raw: string): string {
+  let body = raw.replace(/^---[\s\S]*?---\s*/, "");
+  body = body
+    .replace(/^#{1,6}\s+.*$/gm, "")
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/`[^`]+`/g, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/[*_~]+/g, "")
+    .replace(/\n+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return body.slice(0, 300);
+}
+
 function generateOgSvg(
   title: string,
   siteName: string,
   author: string,
+  bodyPreview: string,
 ): string {
   const bg = "#24292e";
   const fg = "#e1e4e8";
-  const muted = "#b1b8c0";
+  const muted = "#6a737d";
   const accent = "#4493f8";
-  const surface = "#1f2428";
+
+  const marginX = 100;
+  const marginY = 80;
+  const contentWidth = OG_WIDTH - marginX * 2;
 
   const isSiteTitle = title === siteName;
-  const baseFontSize = isSiteTitle ? 144 : 112;
-  const titleLines = wrapSvgText(title || siteName, isSiteTitle ? 11 : 14);
-  const titleFontSize = titleLines.length > 2
-    ? baseFontSize - 24
-    : baseFontSize;
-  const lineHeight = titleFontSize * 1.3;
+  const titleFontSize = isSiteTitle ? 96 : 72;
+  const titleLines = wrapSvgText(title || siteName, isSiteTitle ? 12 : 18);
+  const lineHeight = titleFontSize * 1.25;
   const titleBlockHeight = titleLines.length * lineHeight;
-  const titleStartY = (OG_HEIGHT - titleBlockHeight) / 2 + titleFontSize * 0.8;
+  const titleY = marginY + titleFontSize;
 
   const titleTexts = titleLines.map((line, i) =>
-    `<text x="80" y="${
-      titleStartY + i * lineHeight
-    }" fill="${fg}" font-size="${titleFontSize}" font-family="Iosevka" font-weight="700">${
+    `<text x="${OG_WIDTH / 2}" y="${
+      titleY + i * lineHeight
+    }" text-anchor="middle" fill="${fg}" font-size="${titleFontSize}" font-family="Iosevka" font-weight="700">${
       svgEscape(line)
     }</text>`
   ).join("\n  ");
 
-  const bottomY = OG_HEIGHT - 80;
-  const subtitleParts = [author, siteName].filter(Boolean);
-  const subtitle = subtitleParts.join(" / ");
+  const bodyY = titleY + titleBlockHeight + 40;
+  const bodyFontSize = 28;
+  const bodyLineHeight = bodyFontSize * 1.4;
+  const maxBodyChars = Math.floor(contentWidth / (bodyFontSize * 0.55));
+  const bodyLines = wrapSvgText(bodyPreview, maxBodyChars).slice(0, 3);
+
+  const bodyTexts = bodyLines.map((line, i) =>
+    `<text x="${OG_WIDTH / 2}" y="${
+      bodyY + i * bodyLineHeight
+    }" text-anchor="middle" fill="${muted}" font-size="${bodyFontSize}" font-family="Iosevka">${
+      svgEscape(line)
+    }</text>`
+  ).join("\n  ");
+
+  const footerY = OG_HEIGHT - marginY;
+  const footerParts = [author, siteName].filter(Boolean);
+  const footer = footerParts.join(" / ");
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${OG_WIDTH}" height="${OG_HEIGHT}">
   <rect width="${OG_WIDTH}" height="${OG_HEIGHT}" fill="${bg}"/>
-  <rect x="0" y="0" width="6" height="${OG_HEIGHT}" fill="${accent}"/>
-  <rect x="0" y="${
-    OG_HEIGHT - 4
-  }" width="${OG_WIDTH}" height="4" fill="${surface}"/>
+  <line x1="${marginX}" y1="${footerY - 50}" x2="${OG_WIDTH - marginX}" y2="${
+    footerY - 50
+  }" stroke="${accent}" stroke-width="2"/>
   ${titleTexts}
-  <text x="80" y="${bottomY}" fill="${muted}" font-size="64" font-family="Iosevka">${
-    svgEscape(subtitle)
+  ${bodyTexts}
+  <text x="${
+    OG_WIDTH / 2
+  }" y="${footerY}" text-anchor="middle" fill="${muted}" font-size="32" font-family="Iosevka">${
+    svgEscape(footer)
   }</text>
 </svg>`;
 }
@@ -100,9 +135,10 @@ export function generateOgImage(
   title: string,
   siteName: string,
   author: string,
+  bodyPreview: string,
   fontBuffers: Uint8Array[],
 ): Uint8Array {
-  const svg = generateOgSvg(title, siteName, author);
+  const svg = generateOgSvg(title, siteName, author, bodyPreview);
   const resvg = new Resvg(svg, {
     fitTo: { mode: "width", value: OG_WIDTH },
     font: { fontBuffers, loadSystemFonts: false },
@@ -113,3 +149,5 @@ export function generateOgImage(
 export function ogImagePath(slug: string): string {
   return slug === "" ? "og-index.png" : `og-${slug.replace(/\//g, "-")}.png`;
 }
+
+export { extractBodyPreview };
