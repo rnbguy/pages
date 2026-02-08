@@ -38,7 +38,7 @@ export function sanitizeHref(rawHref: string): string | null {
 }
 
 export const CSP_POLICY =
-  "default-src 'self'; img-src 'self' https:; style-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; script-src 'self'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
+  "default-src 'self'; img-src 'self' https:; style-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'";
 
 export function securityHeaders(extra: Record<string, string> = {}): Headers {
   const headers = new Headers(extra);
