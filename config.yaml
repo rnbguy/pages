@@ -6,7 +6,7 @@ port: 8000
 url: "https://ranadeep.in/pages"
 
 # site
-title: "Pages - Minimal Static Site Generator for Personal Websites"
+title: "Pages - Minimal Static Site Generator"
 description: "Pages is a fast, minimal static site generator built with Deno. Create beautiful personal websites and blogs with Markdown, syntax highlighting, and 16+ color themes for the site and code blocks."
 lang: en
 author: ""
