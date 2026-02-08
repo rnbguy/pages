@@ -2,6 +2,7 @@ import { Input, Select } from "@cliffy/prompt";
 import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname, resolve } from "@std/path";
 import { stringify as yamlStringify } from "@std/yaml";
+import GithubSlugger from "github-slugger";
 import type { Config } from "./core/types.ts";
 import { safeResolveUnder, validateSlug } from "./core/security.ts";
 
@@ -17,11 +18,10 @@ export async function scaffold(cfg: Config) {
     options: ["draft", "published"],
     default: "published",
   });
+  const slugger = new GithubSlugger();
   const slug = await Input.prompt({
-    message: "file path (relative to pages/)",
-    default:
-      title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") +
-      ".md",
+    message: `file path (relative to ${cfg.src}/)`,
+    default: slugger.slug(title) + ".md",
   });
   const cleanedSlug = validateSlug(slug);
   if (!cleanedSlug) throw new Error("invalid slug");
