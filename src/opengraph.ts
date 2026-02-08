@@ -1,8 +1,5 @@
 import { initWasm, Resvg } from "resvg-wasm";
-
-const OG_WIDTH = 1200;
-const OG_HEIGHT = 630;
-const FONT_CDN = "https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.2.5/files";
+import { FONT_CDN, OG_HEIGHT, OG_WIDTH } from "./core/constants.ts";
 
 export async function initResvg(): Promise<void> {
   const pkgPath = import.meta.resolve("resvg-wasm");
@@ -21,7 +18,7 @@ export async function fetchFonts(): Promise<Uint8Array[]> {
       const res = await fetch(u);
       if (!res.ok) {
         throw new Error(
-          `failed to fetch font ${u}: ${res.status} ${res.statusText}`,
+          `failed to fetch font ${u}: ${res.status} ${res.statusText}. try running the build again.`,
         );
       }
       return new Uint8Array(await res.arrayBuffer());
@@ -75,16 +72,21 @@ function basenameFromSlug(slug: string): string {
   return last || slug;
 }
 
+export type OgColors = {
+  bg: string;
+  fg: string;
+  muted: string;
+  accent: string;
+};
+
 function generateOgSvg(
   title: string,
   siteName: string,
   author: string,
   slug: string,
+  colors: OgColors,
 ): string {
-  const bg = "#24292e";
-  const fg = "#e1e4e8";
-  const muted = "#6a737d";
-  const accent = "#4493f8";
+  const { bg, fg, muted, accent } = colors;
 
   const marginX = 100;
 
@@ -149,8 +151,9 @@ export function generateOgImage(
   author: string,
   slug: string,
   fontBuffers: Uint8Array[],
+  colors: OgColors,
 ): Uint8Array {
-  const svg = generateOgSvg(title, siteName, author, slug);
+  const svg = generateOgSvg(title, siteName, author, slug, colors);
   const resvg = new Resvg(svg, {
     fitTo: { mode: "width", value: OG_WIDTH },
     font: { fontBuffers, loadSystemFonts: false },
