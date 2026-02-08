@@ -77,7 +77,11 @@ pages build
 pages serve
 ```
 
-to update: `deno install -g -A -f jsr:@rnbguy/pages`
+to update:
+
+```bash
+deno install -g -A -f jsr:@rnbguy/pages
+```
 
 see [deno install](https://docs.deno.com/runtime/reference/cli/install/) for
 setting up your PATH.
