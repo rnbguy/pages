@@ -80,7 +80,7 @@ pages serve
 to update:
 
 ```bash
-deno install -g -A -f jsr:@rnbguy/pages
+deno install -g -A -rf jsr:@rnbguy/pages
 ```
 
 see [deno install](https://docs.deno.com/runtime/reference/cli/install/) for
