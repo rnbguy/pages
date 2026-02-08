@@ -3,7 +3,7 @@
 src: pages
 dest: dist
 port: 8000
-url: ""
+url: "https://ranadeep.in/pages"
 
 # site
 title: "Pages"
