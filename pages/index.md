@@ -73,6 +73,7 @@ then use `pages` directly:
 
 ```bash
 pages init my-site
+cd my-site
 pages build
 pages serve
 ```
