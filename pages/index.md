@@ -10,33 +10,68 @@ a tiny amount of custom glue.
 
 ## quick start
 
-```bash
-deno task build   # build to dist/
-deno task serve   # preview locally
-```
+1. **clone this repo**
+   ```bash
+   git clone https://github.com/rnbguy/pages my-site
+   cd my-site
+   ```
 
-## example page
+2. **update config**
 
-<!-- deno-fmt-ignore -->
-```markdown
----
-title: "hello world"
-description: "my first page"
----
+   edit `config.yaml` with your details:
+   ```yaml
+   title: your site name
+   url: https://yourusername.github.io/your-repo
+   github: yourusername
+   # optional: add twitter, image, etc.
+   ```
 
-# hello world
+   > [!NOTE]
+   >
+   > if this repo is your `username.github.io` repository, use
+   > `username.github.io` as your url
 
-this is a markdown page with **bold**, *italic*, and `code`.
-```
+3. **add your content**
+
+   write markdown files in the `pages/` directory:
+   ```bash
+   # create a new page
+   cat > pages/hello.md << 'EOF'
+   ---
+   title: hello world
+   description: my first page
+   ---
+
+   this is my first page!
+   EOF
+   ```
+
+4. **commit and push**
+   ```bash
+   git add .
+   git commit -m "initial site setup"
+   git push origin main
+   ```
+
+5. **enable github pages**
+
+   - go to your repo on github: settings > pages.
+     - https://github.com/yourusername/your-repo/settings/pages
+   - set source to "github actions".
+
+   that's it - the included workflow will deploy automatically
+
+   > [!NOTE]
+   >
+   > if you intend to (or already) use a custom domain for github pages, use
+   > `thatwebsite.com/repo-name` or just `thatwebsite.com` accordingly
 
 ## structure
 
-```
-pages/        # markdown + static assets
-src/          # ssg code
-dist/         # build output
-config.yaml   # site settings
-```
+    pages/        # markdown + static assets
+    src/          # ssg code
+    dist/         # build output
+    config.yaml   # site settings
 
 ## learn more
 
