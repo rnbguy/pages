@@ -116,7 +116,12 @@ export function createMarkedForPage(
               }</code></pre>`,
               meta.filename,
             );
-          } catch {
+          } catch (err) {
+            console.warn(
+              `warning: mermaid rendering failed: ${
+                err instanceof Error ? err.message : err
+              }`,
+            );
             return wrapCodeBlock(
               `<pre class="mermaid-diagram"><code>${
                 escapeHtml(meta.body)
