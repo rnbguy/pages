@@ -44,7 +44,7 @@ dist/         # build output
 this repo is published at:
 
 ```
-https://rnbguy.github.io/pages
+https://ranadeep.in/pages
 ```
 
 set `url` in `config.yaml` to that value so canonical links and assets resolve

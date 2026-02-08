@@ -1,3 +1,3 @@
 # pages
 
-https://rnbguy.github.io/pages
+https://ranadeep.in/pages
