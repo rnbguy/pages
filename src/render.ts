@@ -1,7 +1,7 @@
 import { Monitor, Moon, Sun } from "lucide-static";
 import { siGithub, siTwitter } from "simple-icons";
 import { readSiteCss } from "./styles.ts";
-import { CSP_POLICY, escapeAttr, escapeHtml } from "./core/security.ts";
+import { escapeAttr, escapeHtml } from "./core/security.ts";
 import { fnv1a, THEMES } from "./core/themes.ts";
 import type { Config, Page } from "./core/types.ts";
 import { applyBasePath, basePathFromUrl } from "./core/url.ts";
@@ -139,7 +139,7 @@ export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="${escapeAttr(CSP_POLICY)}">
+
 <title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeAttr(desc)}">
 ${keywords ? `<meta name="keywords" content="${escapeAttr(keywords)}">` : ""}
@@ -214,7 +214,7 @@ ${
   <div class="theme-picker">
   <div class="theme-ctrl">
     <button type="button" class="mode-btn" aria-label="toggle light/dark" title="system"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
-    <button type="button" class="drop-btn" aria-label="select theme" aria-expanded="false" aria-haspopup="true" aria-controls="theme-menu"><div class="tri"></div></button>
+    <button type="button" class="drop-btn" aria-label="select theme" aria-expanded="false" aria-haspopup="true" aria-controls="theme-menu"><span class="tri"></span></button>
   </div>
   <div id="theme-menu" class="theme-menu">
     ${themesHtml}

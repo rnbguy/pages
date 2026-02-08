@@ -38,12 +38,17 @@ export function sanitizeHref(rawHref: string): string | null {
 }
 
 export const CSP_POLICY =
-  "default-src 'self'; img-src 'self' https:; style-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'";
+  "default-src 'none'; img-src 'self' https:; style-src 'self' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'self'";
 
 export function securityHeaders(extra: Record<string, string> = {}): Headers {
   const headers = new Headers(extra);
   headers.set("x-content-type-options", "nosniff");
-  headers.set("referrer-policy", "no-referrer");
+  headers.set("x-frame-options", "SAMEORIGIN");
+  headers.set("referrer-policy", "strict-origin-when-cross-origin");
+  headers.set(
+    "strict-transport-security",
+    "max-age=31536000; includeSubDomains",
+  );
   headers.set("permissions-policy", "interest-cohort=()");
   headers.set("content-security-policy", CSP_POLICY);
   return headers;
