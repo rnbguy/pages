@@ -22,7 +22,6 @@ import {
   initHighlighter,
 } from "./markdown.ts";
 import {
-  extractBodyPreview,
   fetchFonts,
   generateOgImage,
   initResvg,
@@ -119,6 +118,9 @@ async function collectContent(
       }
       if (meta.description != null && typeof meta.description !== "string") {
         meta.description = String(meta.description);
+      }
+      if (meta.author != null && typeof meta.author !== "string") {
+        meta.author = String(meta.author);
       }
       if (meta.draft) continue;
 
@@ -265,12 +267,11 @@ async function generateOgImages(
     8,
     async (page) => {
       const ogFile = ogImagePath(page.slug);
-      const bodyPreview = page.meta.description || extractBodyPreview(page.raw);
       const png = generateOgImage(
-        page.meta.title ?? cfg.title,
+        page.meta.title ?? "",
         cfg.title,
-        cfg.author,
-        bodyPreview,
+        page.meta.author ?? cfg.author,
+        page.slug,
         fontBuffers,
       );
       await Deno.writeFile(join(assetDir, ogFile), png);

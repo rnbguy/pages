@@ -79,6 +79,7 @@ export type Config = {
 export type PageMeta = {
   title?: string;
   description?: string;
+  author?: string;
   tags?: string[];
   date?: string | Date;
   draft?: boolean;
