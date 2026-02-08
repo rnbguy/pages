@@ -4,6 +4,13 @@ import { readSiteCss } from "./styles.ts";
 import { escapeAttr, escapeHtml } from "./core/security.ts";
 import { fnv1a, THEMES } from "./core/themes.ts";
 import type { Config, Page } from "./core/types.ts";
+import {
+  FONT_CSS_400,
+  FONT_CSS_400_INTEGRITY,
+  FONT_CSS_700,
+  FONT_CSS_700_INTEGRITY,
+  PAGES_TOOL_URL,
+} from "./core/constants.ts";
 import { applyBasePath, basePathFromUrl } from "./core/url.ts";
 import { resolvePageImage } from "./image.ts";
 
@@ -17,8 +24,8 @@ const ICON_SUN = iconSvg(Sun.trim());
 const ICON_MOON = iconSvg(Moon.trim());
 const ICON_MONITOR = iconSvg(Monitor.trim());
 
-export function renderSiteCss(): string {
-  return readSiteCss();
+export async function renderSiteCss(): Promise<string> {
+  return await readSiteCss();
 }
 
 export function renderThemesJson(): string {
@@ -68,7 +75,7 @@ export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
   const faviconLight = `${assetBase}/favicon-light.svg`;
   const faviconDark = `${assetBase}/favicon-dark.svg`;
   const rootHref = applyBasePath(basePath, "/");
-  const pagesToolUrl = "https://ranadeep.in/pages";
+  const pagesToolUrl = PAGES_TOOL_URL;
 
   const canonical = `${cfg.url}${page.url}`;
   const is404 = page.slug === "404";
@@ -181,8 +188,8 @@ ${
     }`
   }
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.2.5/400.css" integrity="sha384-RRQ8hjtrDMfJX/JcDXps2ApDVhwLE9xuxoFPeJE/M3V/OgwHhLdCMhYMYtSvLeM3" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.2.5/700.css" integrity="sha384-joF5n+o4PFB37c3KT86e9tMpigwZbmIQTBGknI5BCn9OS5aep52V7x3QqTvxlC/h" crossorigin="anonymous">
+<link rel="stylesheet" href="${FONT_CSS_400}" integrity="${FONT_CSS_400_INTEGRITY}" crossorigin="anonymous">
+<link rel="stylesheet" href="${FONT_CSS_700}" integrity="${FONT_CSS_700_INTEGRITY}" crossorigin="anonymous">
 <link rel="icon" type="image/svg+xml" href="${
     escapeAttr(faviconLight)
   }" media="(prefers-color-scheme: light)">

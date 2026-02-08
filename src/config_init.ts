@@ -2,10 +2,8 @@ import { ensureDir } from "@std/fs/ensure-dir";
 import { join } from "@std/path";
 import { stringify as yamlStringify } from "@std/yaml";
 import { DEFAULTS } from "./core/config.ts";
+import { REMOTE_SCHEMA_URL } from "./core/constants.ts";
 import { writeConfigSchema } from "./schema.ts";
-
-const REMOTE_SCHEMA =
-  "https://github.com/rnbguy/pages/raw/main/config.schema.json";
 
 const DUMMY_INDEX = `\
 ---
@@ -45,7 +43,7 @@ export async function initProject(name: string) {
   await Deno.writeTextFile(join(name, ".gitignore"), "dist/\n");
 
   // config.yaml with remote schema
-  const header = `# yaml-language-server: $schema=${REMOTE_SCHEMA}\n`;
+  const header = `# yaml-language-server: $schema=${REMOTE_SCHEMA_URL}\n`;
   const body = yamlStringify({ title: DEFAULTS.title, url: DEFAULTS.url })
     .trim();
   await Deno.writeTextFile(join(name, "config.yaml"), header + body + "\n");
