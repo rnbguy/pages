@@ -60,14 +60,36 @@ no need to clone the tool repo.
    > if you intend to (or already) use a custom domain for github pages, use
    > `thatwebsite.com/repo-name` or just `thatwebsite.com` accordingly
 
+## install globally
+
+to avoid typing `deno run -A jsr:@rnbguy/pages` every time, install it as a
+global command:
+
+```bash
+deno install -g -A jsr:@rnbguy/pages
+```
+
+then use `pages` directly:
+
+```bash
+pages init my-site
+pages build
+pages serve
+```
+
+to update: `deno install -g -A -f jsr:@rnbguy/pages`
+
+see [deno install](https://docs.deno.com/runtime/reference/cli/install/) for
+setting up your PATH.
+
 ## commands
 
 ```bash
-deno run -A jsr:@rnbguy/pages init <name>     # create a new site project
-deno run -A jsr:@rnbguy/pages build            # generate the site
-deno run -A jsr:@rnbguy/pages serve            # local preview server
-deno run -A jsr:@rnbguy/pages new              # scaffold a new page
-deno run -A jsr:@rnbguy/pages build --help     # see all options
+pages init <name>     # create a new site project
+pages build            # generate the site
+pages serve            # local preview server
+pages new              # scaffold a new page
+pages build --help     # see all options
 ```
 
 ## structure
