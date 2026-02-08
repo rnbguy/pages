@@ -27,7 +27,7 @@ jobs:
       - run: deno fmt --check
       - run: deno lint
       - run: deno check src/main.ts
-      - run: deno task build -- --url "https://rnbguy.github.io"
+      - run: deno task build -- --url "https://rnbguy.github.io/pages"
         env:
           DENO_FROZEN_LOCKFILE: "true"
       - uses: actions/upload-pages-artifact@v3
