@@ -1,5 +1,6 @@
 import { Marked, type Token } from "marked";
 import markedAlert from "marked-alert";
+import { gfmHeadingId } from "marked-gfm-heading-id";
 import { createHighlighter, type Highlighter } from "shiki";
 import { transformerStyleToClass } from "@shikijs/transformers";
 import { renderMermaidAscii } from "beautiful-mermaid";
@@ -170,6 +171,7 @@ export function createMarkedForPage(
       },
     },
   });
+  marked.use(gfmHeadingId());
   marked.use(markedAlert());
   return marked;
 }
