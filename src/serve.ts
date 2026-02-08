@@ -75,6 +75,10 @@ export async function serve(cfg: Config, port: number) {
         ".jpeg": "image/jpeg",
         ".gif": "image/gif",
         ".webp": "image/webp",
+        ".webm": "video/webm",
+        ".ico": "image/x-icon",
+        ".woff": "font/woff",
+        ".woff2": "font/woff2",
         ".pdf": "application/pdf",
       };
       for (const rel of tryPaths) {
