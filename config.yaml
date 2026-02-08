@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=./config.schema.json
+# paths
+src: pages
+dest: dist
+port: 8000
+url: ""
+
+# site
+title: "Pages"
+description: "A static site built with Deno"
+lang: en
+author: ""
+
+# branding
+logo: ""
+faviconText: "p"
+
+# seo
+robots: "index, follow"
+
+# content
+mermaid:
+  useAscii: true
+  paddingX: 5
+  paddingY: 5
+  boxBorderPadding: 1
+
+# navigation
+navBar:
+  - whoami
