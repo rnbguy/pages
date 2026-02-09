@@ -12,7 +12,7 @@ import {
   PAGES_TOOL_URL,
 } from "./core/constants.ts";
 import { applyBasePath, basePathFromUrl } from "./core/url.ts";
-import { resolvePageImage } from "./image.ts";
+import { resolveImageUrl, resolvePageImage } from "./image.ts";
 
 function iconSvg(svg: string): string {
   return svg
@@ -131,9 +131,10 @@ export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
   const rawMdUrl = `${cfg.url}/${page.slug === "" ? "index" : page.slug}.md`;
 
   const twitterCard = cfg.twitter.card;
-  const logoSrc = cfg.logo?.startsWith("/")
-    ? applyBasePath(basePath, cfg.logo)
-    : cfg.logo;
+  const resolvedLogo = cfg.logo ? resolveImageUrl(cfg, cfg.logo) : "";
+  const logoSrc = resolvedLogo?.startsWith("/")
+    ? applyBasePath(basePath, resolvedLogo)
+    : resolvedLogo;
   const logoHtml = logoSrc
     ? `<img class="site-logo" src="${escapeAttr(logoSrc)}" alt="logo">`
     : "";
