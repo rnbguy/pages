@@ -1,5 +1,5 @@
-import { Mail, Monitor, Moon, Sun } from "lucide-static";
-import { siGithub, siTwitter } from "simple-icons";
+import { Monitor, Moon, Sun } from "lucide-static";
+import { siGmail, siGithub, siTwitter } from "simple-icons";
 import { readSiteCss } from "./styles.ts";
 import { escapeAttr, escapeHtml, sanitizeHref } from "./core/security.ts";
 import { fnv1a, THEMES } from "./core/themes.ts";
@@ -23,7 +23,7 @@ function iconSvg(svg: string): string {
 const ICON_SUN = iconSvg(Sun.trim());
 const ICON_MOON = iconSvg(Moon.trim());
 const ICON_MONITOR = iconSvg(Monitor.trim());
-const ICON_MAIL = iconSvg(Mail.trim());
+const ICON_MAIL = iconSvg(siGmail.svg);
 
 export async function renderSiteCss(): Promise<string> {
   return await readSiteCss();
