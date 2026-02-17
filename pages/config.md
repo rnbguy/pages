@@ -37,8 +37,8 @@ all site settings live in `config.yaml` at the project root.
 | key      | type          | description                                                            |
 | -------- | ------------- | ---------------------------------------------------------------------- |
 | `robots` | string        | robots meta directive (default: `index, follow`)                       |
-| `github` | string        | github username for profile image                                      |
-| `email`  | string        | email address for footer contact icon                                  |
+| `github` | string        | optional github username for footer icon                               |
+| `email`  | string        | optional email address for footer icon                                 |
 | `image`  | string/object | default og image - `"github"`, `"twitter"`, `{ file: "path" }`, or url |
 
 ## opengraph
@@ -58,6 +58,8 @@ twitter:
   profile: "@handle"
 ```
 
+github, twitter (`site`/`profile`), and email are optional. if omitted or empty, the related footer icon is not rendered.
+
 ## mermaid
 
 ```yaml
@@ -75,7 +77,7 @@ navBar:
   - about # links to /about
   - projects # links to /projects
   - GitLab: https://gitlab.com/yourname # custom external link
-  - Contact: /contact # custom internal link
+  - Contact: /reach-me # custom internal link
 ```
 
 array of navigation items shown in the header. each item can be:
@@ -100,14 +102,22 @@ author: "your name"
 faviconText: "m"
 
 robots: "index, follow"
+# optional social links (omit or set empty to hide icon)
+github: "your-github-handle"
+twitter:
+  card: summary_large_image
+  site: "@yourhandle"
+  profile: "@yourhandle"
 email: "you@example.com"
 
 mermaid:
   useAscii: true
 
 navBar:
-  - about
-  - blog
+  - about # links to /about
+  - blog # links to /blog
+  - GitLab: https://gitlab.com/yourname # custom external link
+  - Contact: /reach-me # custom internal link
 ```
 
 ---
