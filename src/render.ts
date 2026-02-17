@@ -1,5 +1,5 @@
 import { Monitor, Moon, Sun } from "lucide-static";
-import { siGmail, siGithub, siTwitter } from "simple-icons";
+import { siGithub, siGmail, siTwitter } from "simple-icons";
 import { readSiteCss } from "./styles.ts";
 import { escapeAttr, escapeHtml, sanitizeHref } from "./core/security.ts";
 import { fnv1a, THEMES } from "./core/themes.ts";
