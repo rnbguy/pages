@@ -442,9 +442,15 @@ body {
   line-height: 1.6;
   color: var(--fg);
   background: var(--bg);
+  min-height: 100vh;
   max-width: 48rem;
   margin: 0 auto;
   padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1 0 auto;
 }
 .skip-link {
   position: absolute;
