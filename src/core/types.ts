@@ -2,7 +2,10 @@ import { type Static, Type } from "@sinclair/typebox";
 
 export const NavBarItemSchema = Type.Union([
   Type.String(),
-  Type.Record(Type.String(), Type.String(), { minProperties: 1, maxProperties: 1 }),
+  Type.Record(Type.String(), Type.String(), {
+    minProperties: 1,
+    maxProperties: 1,
+  }),
 ]);
 
 export type NavBarItem = string | Record<string, string>;
@@ -38,6 +41,7 @@ export const ConfigSchema = Type.Object({
   faviconText: Type.Optional(Type.String()),
   // social + previews
   github: Type.Optional(Type.String()),
+  email: Type.Optional(Type.String()),
   image: Type.Optional(ImageConfigSchema),
   og: Type.Optional(Type.Object({
     type: Type.Optional(Type.String()),
@@ -75,6 +79,7 @@ export type Config = {
   logo: string;
   faviconText: string;
   github: string;
+  email: string;
   image: ImageConfig;
   og: { type: string; locale: string };
   twitter: { card: string; site: string; profile: string };
