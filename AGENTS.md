@@ -34,10 +34,23 @@ docs, and PR workflow.
    - Prefer a fresh branch for follow-up work.
    - Remove stale branches after replacement PRs are created.
 
+6. Social icons: keep source/style consistent
+   - Prefer package-provided icons over hardcoded inline SVGs when possible.
+   - Keep social icon sources consistent (`simple-icons` for
+     GitHub/Twitter/email) to avoid fill vs stroke mismatches.
+
+7. Local quality gates are required before commits/PR updates
+   - Run `deno fmt --check` and `deno lint` in addition to check/tests.
+   - For rendered output changes, validate with `deno task build` and
+     `deno task serve` at `http://localhost:8000`.
+
 ## Required Verification Before Saying "Done"
 
 - `deno check src/core/types.ts src/core/config.ts src/render.ts`
 - `deno test --allow-read --allow-write`
+- `deno fmt --check`
+- `deno lint`
+- If output/UI changed: `deno task build` and `deno task serve`
 - Confirm docs examples reflect real supported behavior.
 - Confirm PR branch includes all expected file changes.
 

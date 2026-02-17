@@ -6,7 +6,7 @@ Thanks for contributing to `pages`.
 
 1. Branch from latest `main`.
 2. Make focused changes (one concern per PR).
-3. Run format/lint/check locally.
+3. Run format/lint/check/test locally.
 4. Update docs when behavior or config changes.
 5. Open PR with a short summary and verification notes.
 
@@ -15,7 +15,7 @@ Thanks for contributing to `pages`.
 Run these before opening or updating a PR:
 
 ```bash
-deno fmt
+deno fmt --check
 deno lint
 deno check src/core/types.ts src/core/config.ts src/render.ts
 deno test --allow-read --allow-write
@@ -32,6 +32,9 @@ deno task serve
 ```
 
 Then open `http://localhost:8000` and confirm the rendered page looks correct.
+
+For quick local iteration, you can run the same pair after each UI/content
+change before pushing updates.
 
 ## Config Change Checklist
 
