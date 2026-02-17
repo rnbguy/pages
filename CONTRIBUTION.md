@@ -21,6 +21,18 @@ deno check src/core/types.ts src/core/config.ts src/render.ts
 deno test --allow-read --allow-write
 ```
 
+## Render and Preview (for content/UI changes)
+
+When changes affect rendered output (templates, styles, markdown/pages, config
+shape), verify the final site locally:
+
+```bash
+deno task build
+deno task serve
+```
+
+Then open `http://localhost:8000` and confirm the rendered page looks correct.
+
 ## Config Change Checklist
 
 When adding/changing config behavior, update all of:
