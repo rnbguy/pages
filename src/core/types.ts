@@ -1,5 +1,12 @@
 import { type Static, Type } from "@sinclair/typebox";
 
+export const NavBarItemSchema = Type.Union([
+  Type.String(),
+  Type.Record(Type.String(), Type.String(), { minProperties: 1, maxProperties: 1 }),
+]);
+
+export type NavBarItem = string | Record<string, string>;
+
 export const MermaidConfigSchema = Type.Object({
   useAscii: Type.Optional(Type.Boolean()),
   paddingX: Type.Optional(Type.Number()),
@@ -46,7 +53,7 @@ export const ConfigSchema = Type.Object({
   // content
   mermaid: Type.Optional(MermaidConfigSchema),
   // navigation
-  navBar: Type.Optional(Type.Array(Type.String())),
+  navBar: Type.Optional(Type.Array(NavBarItemSchema)),
 }, { additionalProperties: false });
 
 export type MermaidConfig = {
@@ -73,7 +80,7 @@ export type Config = {
   twitter: { card: string; site: string; profile: string };
   robots: string;
   mermaid: MermaidConfig;
-  navBar: string[];
+  navBar: NavBarItem[];
 };
 
 export type PageMeta = {

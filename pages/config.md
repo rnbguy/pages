@@ -73,9 +73,14 @@ mermaid:
 navBar:
   - about # links to /about
   - projects # links to /projects
+  - GitLab: https://gitlab.com/yourname # custom external link
+  - Contact: /contact # custom internal link
 ```
 
-array of page slugs to show in the header navigation.
+array of navigation items shown in the header. each item can be:
+
+- a string slug (`about`) that links to `/<slug>`
+- a single-key object (`Label: URL`) for arbitrary links
 
 ## example
 

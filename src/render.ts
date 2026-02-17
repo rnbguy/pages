@@ -1,7 +1,7 @@
 import { Monitor, Moon, Sun } from "lucide-static";
 import { siGithub, siTwitter } from "simple-icons";
 import { readSiteCss } from "./styles.ts";
-import { escapeAttr, escapeHtml } from "./core/security.ts";
+import { escapeAttr, escapeHtml, sanitizeHref } from "./core/security.ts";
 import { fnv1a, THEMES } from "./core/themes.ts";
 import type { Config, Page } from "./core/types.ts";
 import {
@@ -113,12 +113,29 @@ export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
   const twitterSite = cfg.twitter.site ||
     (twitterProfile ? `@${twitterProfile.replace(/^@/, "")}` : "");
 
-  const topLinks = (cfg.navBar ?? []).map((key: string) => {
-    const slug = key.trim().toLowerCase();
+  const topLinks = (cfg.navBar ?? []).flatMap((item) => {
+    if (typeof item === "object" && item !== null) {
+      const entries = Object.entries(item);
+      if (entries.length !== 1) return [];
+      const [label, url] = entries[0];
+      const safeHref = sanitizeHref(url);
+      if (!safeHref) return [];
+      const isExternal = /^https?:\/\//.test(safeHref);
+      const attrs = isExternal
+        ? ' target="_blank" rel="noopener noreferrer"'
+        : "";
+      return [
+        `<a class="top-link" href="${escapeAttr(safeHref)}"${attrs}>${escapeHtml(label)}</a>`,
+      ];
+    }
+
+    const slug = String(item).trim().toLowerCase();
     const label = slug.replace(/[_-]+/g, " ");
-    return `<a class="top-link" href="${
-      escapeAttr(applyBasePath(basePath, `/${slug}`))
-    }">${escapeHtml(label)}</a>`;
+    return [
+      `<a class="top-link" href="${
+        escapeAttr(applyBasePath(basePath, `/${slug}`))
+      }">${escapeHtml(label)}</a>`,
+    ];
   }).join("");
 
   const themeLabels = Object.keys(THEMES).sort((a, b) => fnv1a(a) - fnv1a(b));
