@@ -38,6 +38,7 @@ all site settings live in `config.yaml` at the project root.
 | -------- | ------------- | ---------------------------------------------------------------------- |
 | `robots` | string        | robots meta directive (default: `index, follow`)                       |
 | `github` | string        | github username for profile image                                      |
+| `email`  | string        | email address for footer contact icon                                  |
 | `image`  | string/object | default og image - `"github"`, `"twitter"`, `{ file: "path" }`, or url |
 
 ## opengraph
@@ -99,6 +100,7 @@ author: "your name"
 faviconText: "m"
 
 robots: "index, follow"
+email: "you@example.com"
 
 mermaid:
   useAscii: true

@@ -18,6 +18,7 @@ export const DEFAULTS: Config = {
   faviconText: "r",
   // social + previews
   github: "",
+  email: "",
   image: "github",
   og: { type: "website", locale: "en_US" },
   twitter: { card: "summary", site: "", profile: "" },

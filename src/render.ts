@@ -1,4 +1,4 @@
-import { Monitor, Moon, Sun } from "lucide-static";
+import { Mail, Monitor, Moon, Sun } from "lucide-static";
 import { siGithub, siTwitter } from "simple-icons";
 import { readSiteCss } from "./styles.ts";
 import { escapeAttr, escapeHtml, sanitizeHref } from "./core/security.ts";
@@ -23,6 +23,7 @@ function iconSvg(svg: string): string {
 const ICON_SUN = iconSvg(Sun.trim());
 const ICON_MOON = iconSvg(Moon.trim());
 const ICON_MONITOR = iconSvg(Monitor.trim());
+const ICON_MAIL = iconSvg(Mail.trim());
 
 export async function renderSiteCss(): Promise<string> {
   return await readSiteCss();
@@ -109,6 +110,19 @@ export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
     ? `<a class="social-link" href="${
       escapeAttr(githubUrl)
     }" aria-label="github profile" title="github">${iconSvg(siGithub.svg)}</a>`
+    : "";
+  const emailValue = cfg.email?.trim() ?? "";
+  const emailHref = emailValue
+    ? sanitizeHref(
+      emailValue.toLowerCase().startsWith("mailto:")
+        ? emailValue
+        : `mailto:${emailValue}`,
+    )
+    : "";
+  const emailIcon = emailHref
+    ? `<a class="social-link" href="${
+      escapeAttr(emailHref)
+    }" aria-label="email" title="email">${ICON_MAIL}</a>`
     : "";
   const twitterSite = cfg.twitter.site ||
     (twitterProfile ? `@${twitterProfile.replace(/^@/, "")}` : "");
@@ -255,7 +269,7 @@ ${
     page.slug !== "404"
       ? `<footer>\n<div class="footer-left"><a class="md-link" href="${
         escapeAttr(rawMdUrl)
-      }">raw <span class="md-ext">.md</span></a></div>\n<div class="footer-center"><a class="built-link" href="${pagesToolUrl}">built by <span class="md-ext">/pages</span></a></div>\n<div class="footer-right">${twitterIcon}${githubIcon}</div>\n</footer>`
+      }">raw <span class="md-ext">.md</span></a></div>\n<div class="footer-center"><a class="built-link" href="${pagesToolUrl}">built by <span class="md-ext">/pages</span></a></div>\n<div class="footer-right">${twitterIcon}${githubIcon}${emailIcon}</div>\n</footer>`
       : ""
   }
 <script src="${escapeAttr(assetBase)}/site.js" defer></script>
