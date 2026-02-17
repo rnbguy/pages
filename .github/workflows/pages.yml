@@ -3,6 +3,8 @@ name: pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -37,6 +39,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     permissions:
       pages: write
       id-token: write
@@ -50,6 +53,7 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     permissions:
       contents: read
       id-token: write
