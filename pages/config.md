@@ -58,7 +58,8 @@ twitter:
   profile: "@handle"
 ```
 
-github, twitter (`site`/`profile`), and email are optional. if omitted or empty, the related footer icon is not rendered.
+github, twitter (`site`/`profile`), and email are optional. if omitted or empty,
+the related footer icon is not rendered.
 
 ## mermaid
 

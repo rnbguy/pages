@@ -2,7 +2,10 @@ import { type Static, Type } from "@sinclair/typebox";
 
 export const NavBarItemSchema = Type.Union([
   Type.String(),
-  Type.Record(Type.String(), Type.String(), { minProperties: 1, maxProperties: 1 }),
+  Type.Record(Type.String(), Type.String(), {
+    minProperties: 1,
+    maxProperties: 1,
+  }),
 ]);
 
 export type NavBarItem = string | Record<string, string>;

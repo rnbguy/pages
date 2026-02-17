@@ -139,7 +139,9 @@ export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
         ? ' target="_blank" rel="noopener noreferrer"'
         : "";
       return [
-        `<a class="top-link" href="${escapeAttr(safeHref)}"${attrs}>${escapeHtml(label)}</a>`,
+        `<a class="top-link" href="${escapeAttr(safeHref)}"${attrs}>${
+          escapeHtml(label)
+        }</a>`,
       ];
     }
 
