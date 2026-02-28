@@ -41,6 +41,7 @@ export const ConfigSchema = Type.Object({
   faviconText: Type.Optional(Type.String()),
   // social + previews
   github: Type.Optional(Type.String()),
+  linkedin: Type.Optional(Type.String()),
   email: Type.Optional(Type.String()),
   image: Type.Optional(ImageConfigSchema),
   og: Type.Optional(Type.Object({
@@ -79,6 +80,7 @@ export type Config = {
   logo: string;
   faviconText: string;
   github: string;
+  linkedin: string;
   email: string;
   image: ImageConfig;
   og: { type: string; locale: string };
