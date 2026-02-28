@@ -34,13 +34,13 @@ all site settings live in `config.yaml` at the project root.
 
 ## seo
 
-| key        | type          | description                                                            |
-| ---------- | ------------- | ---------------------------------------------------------------------- |
-| `robots`   | string        | robots meta directive (default: `index, follow`)                       |
-| `github`   | string        | optional github username for footer icon                               |
-| `linkedin` | string        | optional linkedin username for footer icon                             |
-| `email`    | string        | optional email address for footer icon                                 |
-| `image`    | string/object | default og image - `"github"`, `"twitter"`, `{ file: "path" }`, or url |
+| key        | type          | description                                                                                    |
+| ---------- | ------------- | ---------------------------------------------------------------------------------------------- |
+| `robots`   | string        | robots meta directive (default: `index, follow`)                                               |
+| `github`   | string        | optional github username for footer icon                                                       |
+| `linkedin` | string        | optional linkedin profile slug for footer icon (the `{slug}` part of `linkedin.com/in/{slug}`) |
+| `email`    | string        | optional email address for footer icon                                                         |
+| `image`    | string/object | default og image - `"github"`, `"twitter"`, `{ file: "path" }`, or url                         |
 
 ## opengraph
 
@@ -106,7 +106,7 @@ faviconText: "m"
 robots: "index, follow"
 # optional social links (omit or set empty to hide icon)
 github: "your-github-handle"
-linkedin: "your-linkedin-username"
+linkedin: "your-profile-slug" # from linkedin.com/in/your-profile-slug
 twitter:
   card: summary_large_image
   site: "@yourhandle"
