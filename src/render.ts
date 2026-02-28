@@ -1,5 +1,5 @@
 import { Monitor, Moon, Sun } from "lucide-static";
-import { siGithub, siGmail, siTwitter } from "simple-icons";
+import { siGithub, siGmail, siLinkedin, siTwitter } from "simple-icons";
 import { readSiteCss } from "./styles.ts";
 import { escapeAttr, escapeHtml, sanitizeHref } from "./core/security.ts";
 import { fnv1a, THEMES } from "./core/themes.ts";
@@ -110,6 +110,17 @@ export function renderPage(page: Page, cfg: Config, ogPath?: string): string {
     ? `<a class="social-link" href="${
       escapeAttr(githubUrl)
     }" aria-label="github profile" title="github">${iconSvg(siGithub.svg)}</a>`
+    : "";
+  const linkedinValue = cfg.linkedin?.trim() ?? "";
+  const linkedinUrl = linkedinValue
+    ? `https://www.linkedin.com/in/${linkedinValue}`
+    : "";
+  const linkedinIcon = linkedinUrl
+    ? `<a class="social-link" href="${
+      escapeAttr(linkedinUrl)
+    }" aria-label="linkedin profile" title="linkedin">${
+      iconSvg(siLinkedin.svg)
+    }</a>`
     : "";
   const emailValue = cfg.email?.trim() ?? "";
   const emailHref = emailValue
@@ -271,7 +282,7 @@ ${
     page.slug !== "404"
       ? `<footer>\n<div class="footer-left"><a class="md-link" href="${
         escapeAttr(rawMdUrl)
-      }">raw <span class="md-ext">.md</span></a></div>\n<div class="footer-center"><a class="built-link" href="${pagesToolUrl}">built by <span class="md-ext">/pages</span></a></div>\n<div class="footer-right">${twitterIcon}${githubIcon}${emailIcon}</div>\n</footer>`
+      })">raw <span class="md-ext">.md</span></a></div>\n<div class="footer-center"><a class="built-link" href="${pagesToolUrl}">built by <span class="md-ext">/pages</span></a></div>\n<div class="footer-right">${twitterIcon}${githubIcon}${linkedinIcon}${emailIcon}</div>\n</footer>`
       : ""
   }
 <script src="${escapeAttr(assetBase)}/site.js" defer></script>
